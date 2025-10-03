@@ -28,10 +28,10 @@ async function testConnection() {
         if (connection) {
             console.log('✅ MongoDB connection successful!');
             console.log('📊 Connection details:');
-            console.log(`  - Host: ${connection.connection.host}`);
-            console.log(`  - Database: ${connection.connection.name}`);
-            console.log(`  - Port: ${connection.connection.port}`);
-            console.log(`  - Ready State: ${connection.connection.readyState}`);
+            // console.log(`  - Host: ${connection.connection.host}`);
+            // console.log(`  - Database: ${connection.connection.name}`);
+            // console.log(`  - Port: ${connection.connection.port}`);
+            // console.log(`  - Ready State: ${connection.connection.readyState}`);
             
             // Test a simple operation
             const collections = await connection.connection.db?.listCollections().toArray();
