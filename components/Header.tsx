@@ -1,24 +1,19 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import React from 'react'
-import Navitems from './Navitems'
-import UserDropdown from "@/components/UserDropdown"
+import Link from "next/link";
+import Image from "next/image";
+import NavItems from "@/components/Navitems";
+import UserDropdown from "@/components/UserDropdown";
 
-const Header = () => {
-  return (
-    <header className='sticky top-0 header'>
-      <div className='flex justify-between items-center container py-4'>
-        <Link href="/">
-          <Image src="/icon.png" alt="Logo" width={140} height={32} className='h-8 w-auto cursor-pointer'/>
-        </Link>
-        <nav className='hidden sm:block'>
-          <Navitems />
-        </nav>
-        <UserDropdown/>
-      </div>
+const Header = async ({ user }: { user: User }) => {
 
-    </header>
-  )
+    return (
+        <header className="sticky top-0 header">
+            <div className="container header-wrapper">
+                <Link href="/">
+                    <Image src="/assets/icons/icon.png" alt="Signalist logo" width={140} height={32} className="h-8 w-auto cursor-pointer" />
+                </Link>
+
+            </div>
+        </header>
+    )
 }
-
 export default Header
