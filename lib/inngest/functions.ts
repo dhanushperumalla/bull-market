@@ -4,7 +4,7 @@ import {sendNewsSummaryEmail, sendWelcomeEmail} from "@/lib/nodemailer";
 import {getAllUsersForNewsEmail} from "@/lib/actions/user.actions";
 import { getWatchlistSymbolsByEmail } from "@/lib/actions/watchlist.actions";
 import { getNews } from "@/lib/actions/finnhub.actions";
-import { getFormattedTodayDate } from "@/lib/utils";
+import {formatDateToday} from "@/lib/utils";
 
 export const sendSignUpEmail = inngest.createFunction(
     { id: 'sign-up-email' },
@@ -59,8 +59,8 @@ export const sendDailyNewsSummary = inngest.createFunction(
 
         // Step #2: For each user, get watchlist symbols -> fetch news (fallback to general)
         const results = await step.run('fetch-user-news', async () => {
-            const perUser: Array<{ user: User; articles: MarketNewsArticle[] }> = [];
-            for (const user of users as User[]) {
+            const perUser: Array<{ user: UserForNewsEmail; articles: MarketNewsArticle[] }> = [];
+            for (const user of users as UserForNewsEmail[]) {
                 try {
                     const symbols = await getWatchlistSymbolsByEmail(user.email);
                     let articles = await getNews(symbols);
@@ -81,7 +81,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
         });
 
         // Step #3: (placeholder) Summarize news via AI
-        const userNewsSummaries: { user: User; newsContent: string | null }[] = [];
+        const userNewsSummaries: { user: UserForNewsEmail; newsContent: string | null }[] = [];
 
         for (const { user, articles } of results) {
                 try {
@@ -110,7 +110,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
                     userNewsSummaries.map(async ({ user, newsContent}) => {
                         if(!newsContent) return false;
 
-                        return await sendNewsSummaryEmail({ email: user.email, date: getFormattedTodayDate(), newsContent })
+                        return await sendNewsSummaryEmail({ email: user.email, date: formatDateToday, newsContent })
                     })
                 )
             })
