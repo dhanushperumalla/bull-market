@@ -29,7 +29,11 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
   }, [])
 
   const handleSearch = async () => {
-    if(!isSearchMode) return setStocks(initialStocks);
+    if (!isSearchMode) {
+      setLoading(false);
+      setStocks(initialStocks);
+      return;
+    }
 
     setLoading(true)
     try {
