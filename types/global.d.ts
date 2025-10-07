@@ -97,11 +97,10 @@ declare global {
     };
 
     type StockDetailsPageProps = {
-        params: Promise<{
+        params: {
             symbol: string;
-        }>;
+        };
     };
-
     type WatchlistButtonProps = {
         symbol: string;
         company: string;
